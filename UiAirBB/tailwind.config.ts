@@ -55,5 +55,16 @@ export default {
   		}
   	}
   },
+  daisyui: {
+    themes: [
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")["light"],
+          "base-100": "#ffffff",  // colore di sfondo predefinito
+        },
+      },
+    ],
+    darkTheme: false, // disabilita il tema dark
+  },
   plugins: [daisyui, require("tailwindcss-animate")],
 } satisfies Config
