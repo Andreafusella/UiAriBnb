@@ -1,52 +1,39 @@
-import Button from "../common/Button"
-import Img from "../common/Img"
-
-const arrImg: string[] = [
-    "/ImgInterniCasa/interni1.png",
-    "/ImgInterniCasa/interni2.jpg",
-    "/ImgInterniCasa/interni3.jpg",
-    "/ImgInterniCasa/interni4.avif",
-    "/ImgInterniCasa/interni5.jpg",
-    "/ImgInterniCasa/interni6.jpg",
-    "/ImgInterniCasa/interni7.png",
-    "/ImgInterniCasa/interni8.jpg",
-    "/ImgInterniCasa/interni9.jpg",
-    "/ImgInterniCasa/interni10.jpg",
-]
+import CardHotelInfoRecensioni from "../commonPlus/CardHotelInfoRecensioni";
+import CardPrenotationHotel from "../commonPlus/CardPrenotationHotel";
+import ImgHotelInfo from "../commonPlus/ImgHotelInfo";
 
 function HotelInfo() {
-
-    function getUrlImgRandom(arrImg: string[]) {
-        let i : number = 0;
-        i = Math.floor(Math.random() * arrImg.length);
-        return arrImg[i];
-    }
-
     return(
         <>
             <hr />
             <div className="container mx-auto px-4 my-5 max-w-[1120px]">
-                <div className="flex justify-between mb-5">
-                    <h1 className="text-3xl">Bellissima casa splendente 🏠</h1>
-                    <div className="flex gap-5">
-                        <Button>📲 Condividi</Button>
-                        <Button>❤️ Salva</Button>
-                    </div>
-                </div>
-                <div className="flex gap-2">
-                    <Img src={getUrlImgRandom(arrImg)} className="w-[560px] h-[470px] rounded-l-3xl object-cover"></Img>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex gap-2">
-                            <Img src={getUrlImgRandom(arrImg)} className="w-[270px] h-[231px] object-cover"></Img>
-                            <Img src={getUrlImgRandom(arrImg)} className="w-[270px] h-[231px] rounded-tr-3xl object-cover"></Img>
+                <ImgHotelInfo></ImgHotelInfo>
+                <div className="flex justify-between mt-10">
+                    <div>
+                        <div className="flex flex-col">
+                            <h1 className="text-xl font-semibold">Italia. Agriturismo</h1>
+                            <div>
+                                <h1 className="flex items-center gap-1">
+                                    2 ospiti 
+                                    <span className="flex items-center">•</span> 
+                                    1 camera da letto 
+                                    <span className="flex items-center">•</span> 
+                                    2 letto 
+                                    <span className="flex items-center">•</span> 
+                                    1 bagno
+                                </h1>
+                            </div>
                         </div>
-                        <div className="flex gap-2">
-                            <Img src={getUrlImgRandom(arrImg)} className="w-[270px] h-[231px] object-cover"></Img>
-                            <Img src={getUrlImgRandom(arrImg)} className="w-[270px] h-[231px] rounded-br-3xl object-cover"></Img>
-                        </div>
+                        <CardHotelInfoRecensioni></CardHotelInfoRecensioni>
                     </div>
+                    <div className="flex justify-center items-center">
+                        <CardPrenotationHotel></CardPrenotationHotel>
+                        {/* sistemare input className */}
+                    </div>
+
                 </div>
             </div>
+            
         </>
     )
 }
