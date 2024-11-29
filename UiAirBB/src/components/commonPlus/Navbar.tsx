@@ -1,28 +1,176 @@
+import { useState } from "react"
 import Button from "../common/Button"
+import Dialog from "../common/Dialog"
 import Img from "../common/Img"
 import LinkText from "../common/LinkText"
-
-
+import { Link, useNavigate } from "react-router-dom"
 
 function Navbar() {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('user')
+    return savedUser ? JSON.parse(savedUser) : null
+  })
+
+  const navigate = useNavigate()
+
+  function loginModalOpen() {
+    setIsRegisterModalOpen(false)
+    setIsLoginModalOpen(true)
+    setIsMobileMenuOpen(false)
+  }
+
+  function registerModalOpen() {
+    setIsLoginModalOpen(false)
+    setIsRegisterModalOpen(true)
+    setIsMobileMenuOpen(false)
+  }
+
+  function handlerEntra() {
+    navigate("/HomePage")
+  }
+
   return (
     <>
-        <div className="h-20 bg-slate-200 py-4 px-8 items-center flex justify-between">
-            <div className="flex items-center gap-3">
-            <Img src="/imgSvg/logo.svg" alt="logo" className="size-14" />
-            <h1 className="text-2xl font-bold">UI AirBnB</h1>
+      {/* Overlay scuro quando il menu è aperto */}
+      <div 
+        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden
+          ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+
+      {/* Menu Mobile Drawer */}
+      <div 
+        className={`fixed top-0 left-0 h-full w-[280px] bg-white z-50 transform transition-transform duration-300 ease-in-out md:hidden
+          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+        {/* Header del Menu */}
+        <div className="p-4 border-b flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Img src="/imgSvg/logo.svg" alt="logo" className="size-8" />
+            <h2 className="text-lg font-semibold">UI AirBnB</h2>
+          </div>
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="p-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
-        <div className="flex items-center gap-7">
-            <LinkText className="hover:text-blue-500 transition duration-200 text-lg" href="#">Home</LinkText>
-            <LinkText className="hover:text-blue-500 transition duration-200 text-lg" href="#">About</LinkText>
-            <LinkText className="hover:text-blue-500 transition duration-200 text-lg" href="#">Contact</LinkText>
+
+        {/* Contenuto del Menu */}
+        <div className="p-4 flex flex-col gap-4">
+          <LinkText 
+            className="text-gray-700 hover:text-blue-500 transition duration-200 text-lg py-2 border-b" 
+            href="#"
+          >
+            Home
+          </LinkText>
+          <LinkText 
+            className="text-gray-700 hover:text-blue-500 transition duration-200 text-lg py-2 border-b" 
+            href="#"
+          >
+            About
+          </LinkText>
+          <LinkText 
+            className="text-gray-700 hover:text-blue-500 transition duration-200 text-lg py-2 border-b" 
+            href="#"
+          >
+            Contact
+          </LinkText>
         </div>
+
+        {/* Footer del Menu con Bottoni */}
+        <div className="absolute bottom-0 left-0 right-0 p-8 border-t bg-white">
+          <div className="flex justify-between gap-2">
+            <Button 
+              className="btn-primary w-24" 
+              onClick={registerModalOpen}
+            >
+              Registrati
+            </Button>
+            <Button 
+              className="btn-primary w-24" 
+              onClick={loginModalOpen}
+            >
+              Login
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Navbar principale*/}
+      <div className="md:h-20 bg-slate-200 px-4 md:px-8 flex items-center justify-between">
+        {/* Logo */}
         <div className="flex items-center gap-3">
-            <Button className="btn-primary" onClick={() => {}}>Login</Button>
-            <Button className="btn-primary" onClick={() => {}}>Registrati</Button>
-            </div>
+          <Img src="/imgSvg/logo.svg" alt="logo" className="size-10 md:size-14" />
+          <h1 className="text-xl md:text-2xl font-bold">UI AirBnB</h1>
         </div>
-        {/* inserire dialog */}
+
+        {/* Hamburger Button */}
+        <button 
+          className="md:hidden p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        {/* Menu Desktop*/}
+        <div className="hidden md:flex items-center gap-7">
+          <LinkText className="hover:text-blue-500 transition duration-200 text-lg" href="#">Home</LinkText>
+          <LinkText className="hover:text-blue-500 transition duration-200 text-lg" href="#">About</LinkText>
+          <LinkText className="hover:text-blue-500 transition duration-200 text-lg" href="#">Contact</LinkText>
+        </div>
+
+
+        
+
+        {/* Bottoni Desktop*/}
+        <div className="hidden md:flex items-center gap-3">
+          {!user ?(
+            <>
+              <Button className="btn-primary" onClick={registerModalOpen}>Registrati</Button>
+              <Button className="btn-primary" onClick={loginModalOpen}>Login</Button>
+            </>
+          ) : (
+            
+            <Button onClick={handlerEntra} className="btn-primary" >Entra</Button>
+          )}
+        </div>
+      </div>
+
+          
+      {/* Dialogs*/}
+      <Dialog 
+        label="Login" 
+        idModal="loginModal" 
+        idForm="loginForm" 
+        isOpen={isLoginModalOpen} 
+        onClose={() => setIsLoginModalOpen(false)} 
+        inputs={[
+          {id: "inputEmailLogin", name: "email", text: "Email", placeholder: "example@ex.it", type: "email"},
+          {id: "inputPasswordLogin", name: "password", text: "Password", placeholder: "********", type: "password"}
+        ]} 
+      />
+      <Dialog 
+        label="Register" 
+        idModal="registerModal" 
+        idForm="registerForm" 
+        isOpen={isRegisterModalOpen} 
+        onClose={() => setIsRegisterModalOpen(false)} 
+        inputs={[
+          {id: "inputName", name: "name", text: "Nome", placeholder: "Mario", type: "text"},
+          {id: "inputLastName", name: "lastName", text: "Cognome", placeholder: "Rossi", type: "text"},
+          {id: "inputEmailRegister", name: "email", text: "Email", placeholder: "example@ex.it", type: "email"},
+          {id: "inputPasswordRegister", name: "password", text: "Password", placeholder: "********", type: "password"}
+        ]} 
+      />
     </>
   )
 }
