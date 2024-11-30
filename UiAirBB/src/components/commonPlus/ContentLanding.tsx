@@ -1,7 +1,18 @@
 import Button from "../common/Button"
 import Img from "../common/Img"
+import { IUser } from "../interface/User"
 
-function ContentLanding() {
+
+interface IContentLanding {
+    savedUser: IUser | null
+    onEnter: () => void
+    onOpenModalLogin: () => void
+    onOpenModalRegister: () => void
+}
+
+
+function ContentLanding({savedUser, onEnter, onOpenModalLogin, onOpenModalRegister} : IContentLanding) {
+    
     return (
         <>
             <div className="relative">
@@ -12,9 +23,10 @@ function ContentLanding() {
             />
             <div className="absolute inset-0 flex flex-col justify-center items-center text-white">
                 <div className="flex flex-col items-center border-4 border-pink-500 rounded-3xl p-10 text-center">
-                    <h1 className="text-4xl font-bold mb-4">AirBnB</h1>
+                    <h1 className="text-4xl font-bold mb-4">Roptin</h1>
                     <p className="text-xl">🥳 Scopri le migliori offerte per il tuo soggiorno 🏠</p>
-                    <Button className="btn-secondary mt-5">Scopri le offerte ⭐️</Button>
+                    <Button onClick={savedUser ? onEnter : onOpenModalLogin} className="btn-secondary mt-5">Scopri le offerte ⭐️</Button>
+                    
                 </div>
                 </div>
             </div>
@@ -23,7 +35,7 @@ function ContentLanding() {
                     <Img src="/ImgBing/house.png" alt="house2" className="md:size-[400px] size-[200px]" />
                     <div className="flex flex-col items-center justify-center text-center">
                         <h2 className="md:text-2xl text-xl font-bold">🏠 Prenota ora il tuo soggiorno</h2>
-                        <Button className="btn-secondary mt-5">Prenota ora 🚀</Button>
+                        <Button onClick={savedUser ? onEnter : onOpenModalRegister} className="btn-secondary mt-5">Prenota ora 🚀</Button>
                     </div>
                 </div>
             </div>

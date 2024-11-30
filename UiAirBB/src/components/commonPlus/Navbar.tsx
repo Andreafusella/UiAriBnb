@@ -1,36 +1,21 @@
 import { useState } from "react"
 import Button from "../common/Button"
-import Dialog from "../common/Dialog"
 import Img from "../common/Img"
 import LinkText from "../common/LinkText"
-import { Link, useNavigate } from "react-router-dom"
 
-function Navbar() {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
-  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
+import { IUser } from "../interface/User"
+
+interface INavbar {
+  savedUser: IUser | null
+  registerModalOpen : () => void
+  loginModalOpen: () => void
+
+  onEnter: () => {}
+}
+
+function Navbar({onEnter, savedUser, registerModalOpen, loginModalOpen}: INavbar) {
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('user')
-    return savedUser ? JSON.parse(savedUser) : null
-  })
-
-  const navigate = useNavigate()
-
-  function loginModalOpen() {
-    setIsRegisterModalOpen(false)
-    setIsLoginModalOpen(true)
-    setIsMobileMenuOpen(false)
-  }
-
-  function registerModalOpen() {
-    setIsLoginModalOpen(false)
-    setIsRegisterModalOpen(true)
-    setIsMobileMenuOpen(false)
-  }
-
-  function handlerEntra() {
-    navigate("/HomePage")
-  }
 
   return (
     <>
@@ -50,7 +35,7 @@ function Navbar() {
         <div className="p-4 border-b flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Img src="/imgSvg/logo.svg" alt="logo" className="size-8" />
-            <h2 className="text-lg font-semibold">UI AirBnB</h2>
+            <h2 className="text-lg font-semibold">UI Roptin</h2>
           </div>
           <button 
             onClick={() => setIsMobileMenuOpen(false)}
@@ -108,7 +93,7 @@ function Navbar() {
         {/* Logo */}
         <div className="flex items-center gap-3">
           <Img src="/imgSvg/logo.svg" alt="logo" className="size-10 md:size-14" />
-          <h1 className="text-xl md:text-2xl font-bold">UI AirBnB</h1>
+          <h1 className="text-xl md:text-2xl font-bold">UI Roptin</h1>
         </div>
 
         {/* Hamburger Button */}
@@ -133,44 +118,17 @@ function Navbar() {
 
         {/* Bottoni Desktop*/}
         <div className="hidden md:flex items-center gap-3">
-          {!user ?(
+          {!savedUser ?(
             <>
               <Button className="btn-primary" onClick={registerModalOpen}>Registrati</Button>
               <Button className="btn-primary" onClick={loginModalOpen}>Login</Button>
             </>
           ) : (
             
-            <Button onClick={handlerEntra} className="btn-primary" >Entra</Button>
+            <Button onClick={onEnter} className="btn-primary" >Entra</Button>
           )}
         </div>
       </div>
-
-          
-      {/* Dialogs*/}
-      <Dialog 
-        label="Login" 
-        idModal="loginModal" 
-        idForm="loginForm" 
-        isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
-        inputs={[
-          {id: "inputEmailLogin", name: "email", text: "Email", placeholder: "example@ex.it", type: "email"},
-          {id: "inputPasswordLogin", name: "password", text: "Password", placeholder: "********", type: "password"}
-        ]} 
-      />
-      <Dialog 
-        label="Register" 
-        idModal="registerModal" 
-        idForm="registerForm" 
-        isOpen={isRegisterModalOpen} 
-        onClose={() => setIsRegisterModalOpen(false)} 
-        inputs={[
-          {id: "inputName", name: "name", text: "Nome", placeholder: "Mario", type: "text"},
-          {id: "inputLastName", name: "lastName", text: "Cognome", placeholder: "Rossi", type: "text"},
-          {id: "inputEmailRegister", name: "email", text: "Email", placeholder: "example@ex.it", type: "email"},
-          {id: "inputPasswordRegister", name: "password", text: "Password", placeholder: "********", type: "password"}
-        ]} 
-      />
     </>
   )
 }

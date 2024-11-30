@@ -74,7 +74,10 @@ function Dialog({ label, idModal, idForm, isOpen, onClose, inputs, ...props }: D
                 <h1 className="font-bold text-xl text-black">{label}</h1>
                 <form id={idForm} className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     {inputs.map((input) => (
-                        <Input key={input.id} id={input.id} name={input.name} placeholder={input.placeholder} type={input.type}>{input.text}</Input>
+                        <>
+                            <h1>{input.text}</h1>
+                            <Input key={input.id} id={input.id} name={input.name} placeholder={input.placeholder} type={input.type}></Input>
+                        </>
                     ))}
                     <div className="modal-action">
                         <Button onClick={handleClose}>Chiudi</Button>

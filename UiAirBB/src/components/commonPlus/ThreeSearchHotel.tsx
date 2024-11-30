@@ -47,7 +47,7 @@ function ThreeSearchHotel(){
                 </div>
                 <div className="w-[50%] h-[1px] md:w-[1px] md:h-14 bg-gray-300 my-3"></div>
 
-                <div className="flex justify-center text-center md:flex-row gap-4 md:gap-10 w-full md:w-auto ">
+                <div className="flex flex-col justify-center text-center md:flex-row gap-4 md:gap-10 w-full md:w-auto ">
                     <div className="relative">
                         <h1 className="text-sm font-medium mb-1 md:text-center">Check-in</h1>
                         <Button onClick={handleCalendar1}>{formDate(date1)}</Button>

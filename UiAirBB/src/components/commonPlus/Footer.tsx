@@ -5,7 +5,7 @@ function Footer() {
         <div className="bg-slate-200 text-white md:p-20 p-10 flex md:flex-row flex-col justify-between items-center">
             <div className="flex flex-col items-center">
                 <Img src="/imgSvg/logo.svg" alt="logo" className="size-[100px]"></Img>
-                <p className="text-black">© 2024 UI AirBnB</p>
+                <p className="text-black">© 2024 UI Roptin</p>
             </div>
             <div className="flex flex-col md:flex-row items-center gap-10 text-center">
                 <ul className="space-y-2 mt-2">

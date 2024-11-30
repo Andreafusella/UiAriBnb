@@ -21,6 +21,10 @@ function NavbarHome(){
         navigate("/")
     }
 
+    function handleButtonNavigateLandingPage() {
+        navigate("/")
+    }
+
     return(
 
         <>
@@ -46,10 +50,10 @@ function NavbarHome(){
                         </button>
 
                         {/* Logo */}
-                        <div className="flex items-center gap-1">
+                        <button onClick={handleButtonNavigateLandingPage} className="flex items-center gap-1">
                             <Img src="/imgSvg/logo.svg" alt="logo" className="w-20" />
-                            <h1 className="text-2xl font-bold">AirBB</h1>
-                        </div>
+                            <h1 className="text-2xl font-bold">Roptin</h1>
+                        </button>
 
                         {/* Menu desktop */}
                         <div className="hidden md:flex gap-3">
