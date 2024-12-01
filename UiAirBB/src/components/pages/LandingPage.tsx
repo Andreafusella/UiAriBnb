@@ -40,7 +40,7 @@ function LandingPage() {
       <Navbar savedUser={user} 
               registerModalOpen={registerModalOpen} 
               loginModalOpen={loginModalOpen}
-              onEnter={() => handlerEntra} 
+              onEnter={handlerEntra} 
       />        
 
       <ContentLanding 

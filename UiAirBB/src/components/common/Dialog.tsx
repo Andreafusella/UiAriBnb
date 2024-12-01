@@ -1,4 +1,4 @@
-import { ComponentProps } from "react"
+import { ComponentProps, useState } from "react"
 import Button from "./Button"
 import Input from "./Input"
 import { twMerge } from "tailwind-merge"
@@ -21,6 +21,8 @@ interface DialogProps extends ComponentProps<'dialog'> {
 
 function Dialog({ label, idModal, idForm, isOpen, onClose, inputs, ...props }: DialogProps) {
     const navigate = useNavigate()
+
+    const [error, setError] = useState(false);
     
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -44,10 +46,13 @@ function Dialog({ label, idModal, idForm, isOpen, onClose, inputs, ...props }: D
 
                     onClose()
                     navigate("/HomePage")
+                    setError(false)
                     return
                 }
             })
             console.log("errore");
+            setError(true)
+
         }
 
         if(idModal === "registerModal"){
@@ -65,6 +70,7 @@ function Dialog({ label, idModal, idForm, isOpen, onClose, inputs, ...props }: D
         e.preventDefault()
         const form = document.getElementById(idForm) as HTMLFormElement
         form.reset();
+        setError(false)
         onClose()
     }
 
@@ -76,9 +82,14 @@ function Dialog({ label, idModal, idForm, isOpen, onClose, inputs, ...props }: D
                     {inputs.map((input) => (
                         <>
                             <h1>{input.text}</h1>
-                            <Input key={input.id} id={input.id} name={input.name} placeholder={input.placeholder} type={input.type}></Input>
+                            <Input key={input.id} id={input.id} name={input.name} placeholder={input.placeholder} type={input.type} error={error}></Input>
                         </>
                     ))}
+                    {error ? (
+                        <p className="text-red-500 font-bold">Credenziali non valide</p>   
+                    ) : (
+                        <></>
+                    )}
                     <div className="modal-action">
                         <Button onClick={handleClose}>Chiudi</Button>
                         <Button type="submit" className="btn-primary">{label}</Button>

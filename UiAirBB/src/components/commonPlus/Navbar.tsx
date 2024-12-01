@@ -9,8 +9,7 @@ interface INavbar {
   savedUser: IUser | null
   registerModalOpen : () => void
   loginModalOpen: () => void
-
-  onEnter: () => {}
+  onEnter: () => void
 }
 
 function Navbar({onEnter, savedUser, registerModalOpen, loginModalOpen}: INavbar) {
