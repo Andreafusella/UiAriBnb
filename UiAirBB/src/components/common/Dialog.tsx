@@ -3,6 +3,8 @@ import Button from "./Button"
 import Input from "./Input"
 import { twMerge } from "tailwind-merge"
 import { useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+
 
 interface DialogProps extends ComponentProps<'dialog'> {
     label: string
@@ -19,55 +21,53 @@ interface DialogProps extends ComponentProps<'dialog'> {
     }[]
 }
 
+type FormData = {
+    [key: string]: string;
+}
+
 function Dialog({ label, idModal, idForm, isOpen, onClose, inputs, ...props }: DialogProps) {
     const navigate = useNavigate()
 
     const [error, setError] = useState(false);
+
+    const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<FormData>();
     
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-       
-        //aggiornare logica submit
-
-        const form = document.getElementById(idForm) as HTMLFormElement
-
+    const sumbitHandler = async (data: FormData) => {
+        console.log("Submitting:", data);
+        
         if(idModal === "loginModal"){
-            const email = (form.elements.namedItem("email") as HTMLInputElement).value
-            const password = (form.elements.namedItem("password") as HTMLInputElement).value
-            const res = await fetch("http://localhost:8000/users")
-            const data = await res.json()
-            data.forEach((user: any) => {
-                if(user.email === email && user.password === password){
-
-                    localStorage.setItem('user', JSON.stringify({
-                        id: user.id,
-                        name: user.username,
-                    }))
-
-                    onClose()
-                    navigate("/HomePage")
-                    setError(false)
-                    return
-                }
+            const email = data.email;
+            const password = data.password;
+            const res = await fetch("http://localhost:8000/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify({
+                    data
+                })
             })
+            const dataLocal = await res.json();
+            
+            if (res.status === 201 && dataLocal.id) {
+                localStorage.setItem('user', JSON.stringify({
+                    id: dataLocal.id,
+                }))
+
+                onClose();
+                navigate("/HomePage");
+                setError(false);
+                return
+            }
+        
             console.log("errore");
             setError(true)
 
-        }
-
-        if(idModal === "registerModal"){
-            const name = (form.elements.namedItem("name") as HTMLInputElement).value
-            const lastName = (form.elements.namedItem("lastName") as HTMLInputElement).value
-            const email = (form.elements.namedItem("email") as HTMLInputElement).value
-            const password = (form.elements.namedItem("password") as HTMLInputElement).value
-            console.log(name, lastName, email, password)
-        }
-        
-        
+        }        
     }
 
     const handleClose = (e: React.MouseEvent) => {
-        e.preventDefault()
+        e.stopPropagation()
         const form = document.getElementById(idForm) as HTMLFormElement
         form.reset();
         setError(false)
@@ -78,12 +78,12 @@ function Dialog({ label, idModal, idForm, isOpen, onClose, inputs, ...props }: D
         <dialog id={idModal} className={twMerge("modal", props.className)} {...props} open={isOpen}>
             <div className="modal-box flex flex-col gap-4 bg-slate-200">
                 <h1 className="font-bold text-xl text-black">{label}</h1>
-                <form id={idForm} className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                <form id={idForm} className="flex flex-col gap-4" onSubmit={handleSubmit(sumbitHandler)}>
                     {inputs.map((input) => (
                         <>
-                            <h1>{input.text}</h1>
-                            <Input key={input.id} id={input.id} name={input.name} placeholder={input.placeholder} type={input.type} error={error}></Input>
-                        </>
+                        <h1>{input.text}</h1>
+                        <Input {...register(input.name, {required: "E' necessario"})} key={input.id} id={input.id} name={input.name} placeholder={input.placeholder} type={input.type} error={error}></Input>
+                        </> 
                     ))}
                     {error ? (
                         <p className="text-red-500 font-bold">Credenziali non valide</p>   
@@ -91,8 +91,8 @@ function Dialog({ label, idModal, idForm, isOpen, onClose, inputs, ...props }: D
                         <></>
                     )}
                     <div className="modal-action">
-                        <Button onClick={handleClose}>Chiudi</Button>
-                        <Button type="submit" className="btn-primary">{label}</Button>
+                        <Button type="button" onClick={handleClose}>Chiudi</Button>
+                        <Button disabled={isSubmitting} type="submit" className="btn-primary">{label}</Button>
                     </div>
                 </form>
             </div>
@@ -104,3 +104,8 @@ function Dialog({ label, idModal, idForm, isOpen, onClose, inputs, ...props }: D
 }
 
 export default Dialog   
+
+
+
+
+

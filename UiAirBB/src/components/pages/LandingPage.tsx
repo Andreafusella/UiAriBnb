@@ -3,7 +3,8 @@ import ContentLanding from "../commonPlus/ContentLanding"
 import Footer from "../commonPlus/Footer"
 import Navbar from "../commonPlus/Navbar"
 import { useState } from "react"
-import Dialog from "../common/Dialog"
+import LoginDialog from "../common/LoginDialog"
+import RegisterDialog from "../common/RegisterDialog"
 
 
 function LandingPage() {
@@ -51,30 +52,14 @@ function LandingPage() {
       />
       <Footer/>
 
-      <Dialog 
-        label="Login" 
-        idModal="loginModal" 
-        idForm="loginForm" 
+      <LoginDialog 
         isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
-        inputs={[
-          {id: "inputEmailLogin", name: "email", text: "Email", placeholder: "example@ex.it", type: "email"},
-          {id: "inputPasswordLogin", name: "password", text: "Password", placeholder: "********", type: "password"}
-        ]} 
+        onClose={() => setIsLoginModalOpen(false)}
       />
-
-      <Dialog 
-        label="Register" 
-        idModal="registerModal" 
-        idForm="registerForm" 
-        isOpen={isRegisterModalOpen} 
-        onClose={() => setIsRegisterModalOpen(false)} 
-        inputs={[
-          {id: "inputName", name: "name", text: "Nome", placeholder: "Mario", type: "text"},
-          {id: "inputLastName", name: "lastName", text: "Cognome", placeholder: "Rossi", type: "text"},
-          {id: "inputEmailRegister", name: "email", text: "Email", placeholder: "example@ex.it", type: "email"},
-          {id: "inputPasswordRegister", name: "password", text: "Password", placeholder: "********", type: "password"}
-        ]} 
+      
+      <RegisterDialog
+        isOpen={isRegisterModalOpen}
+        onClose={() => setIsRegisterModalOpen(false)}
       />
     </>
   )

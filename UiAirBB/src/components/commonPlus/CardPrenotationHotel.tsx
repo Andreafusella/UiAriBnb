@@ -35,7 +35,7 @@ function CardPrenotationHotel() {
         <div className="border-[1px] border-gray-200 p-4 rounded-xl ml-2">
             <form>
                 <h1 className="text-xl font-medium">120 € <span className="text-base font-normal">notte</span></h1>
-                <div className="flex gap-2 mt-5 text-center">
+                <div className="flex justify-between gap-2 mt-5 text-center">
                     <div className="relative">
                         <h1 className="font-medium">Check-in</h1>
                         <Button type="button" onClick={handleCalendar1}>{formDate(date1)}</Button>
@@ -45,6 +45,7 @@ function CardPrenotationHotel() {
                             </div>
                         )}
                     </div>
+                    
                     <div className="relative">
                         <h1 className="font-medium">Check-out</h1>
                         <Button type="button" onClick={handleCalendar2}>{formDate(date2)}</Button>
@@ -56,7 +57,7 @@ function CardPrenotationHotel() {
                     </div>
                 </div>
                 <Input 
-                    className="mt-2 focus:ring-0 focus:ring-offset-0 focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0" 
+                    className="w-full mt-2 focus:ring-0 focus:ring-offset-0 focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0" 
                     placeholder="Numero ospiti"
                 />
                 <Button type="button" className="mt-4 w-full bg-pink-500 text-white text-lg hover:bg-pink-700 ">Prenota</Button>

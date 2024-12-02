@@ -25,7 +25,7 @@ function ImgHotelInfo() {
     return(
         <>
             <div className="flex flex-col xl:flex-row xl:justify-between mb-5 text-center">
-                <h1 className="text-3xl mb-3 xl:mb-0">Casa con vista sul localStorage 🏠</h1>
+                <h1 className="text-3xl mb-3 xl:mb-0">Casa con vista sul Lago 🏠</h1>
                 <div className="flex gap-5 justify-center">
                     <Button>📲 Condividi</Button>
                     <Button>❤️ Salva</Button>
