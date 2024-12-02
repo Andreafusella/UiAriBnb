@@ -17,9 +17,6 @@ UI Roptin è un clone di Airbnb sviluppato con React e TypeScript. Il progetto i
 - DaisyUI
 - Tailwind Merge
 
-### Gestione Date
-- React Day Picker
-
 ## 🏗 Struttura del Progetto
 
 ### Componenti Principali
@@ -55,7 +52,6 @@ Il sistema utilizza localStorage per la gestione dell'autenticazione:
 
 ## 🎨 UI/UX Features
 - Calendario interattivo per selezione date
-- Sistema di preferiti con toggle heart
 - Modal per login/registrazione
 - Animazioni e transizioni fluide
 - Immagini casuali per gli alloggi
@@ -100,7 +96,7 @@ Il progetto utilizza un mix di:
 - Classi utility per responsive design
 
 ## 🔜 Sviluppi Futuri
-- Implementazione backend reale
+- Implementazione gestione alloggi con DB
 - Sistema di recensioni
 - Filtri di ricerca avanzati
 - Gestione pagamenti
